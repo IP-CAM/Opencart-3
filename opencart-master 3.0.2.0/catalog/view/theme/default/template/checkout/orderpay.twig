@@ -1,0 +1,99 @@
+{{ header }}
+
+  <h1>
+  {{ heading_title }} » {{ espay_product_name }}
+  </h1>
+  
+  <!-- duplicate from Confirm -->
+  <div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_name }}</td>
+        <td class="text-left">{{ column_model }}</td>
+        <td class="text-right">{{ column_quantity }}</td>
+        <td class="text-right">{{ column_price }}</td>
+        <td class="text-right">{{ column_total }}</td>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for product in products %}
+    <tr>
+      <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
+        &nbsp;<small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}
+        {% if product.recurring %} <br />
+        <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small> {% endif %}</td>
+      <td class="text-left">{{ product.model }}</td>
+      <td class="text-right">{{ product.quantity }}</td>
+      <td class="text-right">{{ product.price }}</td>
+      <td class="text-right">{{ product.total }}</td>
+    </tr>
+    {% endfor %}
+    {% for voucher in vouchers %}
+    <tr>
+      <td class="text-left">{{ voucher.description }}</td>
+      <td class="text-left"></td>
+      <td class="text-right">1</td>
+      <td class="text-right">{{ voucher.amount }}</td>
+      <td class="text-right">{{ voucher.amount }}</td>
+    </tr>
+    {% endfor %}
+      </tbody>
+    
+    <tfoot>
+   
+    <tr>
+      <td colspan="4" class="text-right"><strong>fee transaction:</strong></td>
+      <td class="text-right">{{ feecurenccy }}</td>
+    </tr>
+      <tr>
+      <td colspan="4" class="text-right"><strong>total:</strong></td>
+      <td class="text-right">{{ totalpay }}</td>
+    </tr>
+      </tfoot>
+
+  </table>
+</div>
+<!-- <script type="text/javascript" src="https://sandbox-kit.espay.id/public/signature/js"></script> -->
+  
+{% if MODULE_PAYMENT_ESPAY_MODE  ==  1 %}
+  <script type="text/javascript" src="https://kit.espay.id/public/signature/js"></script>
+{% else %} 
+  <script type="text/javascript" src="https://sandbox-kit.espay.id/public/signature/js"></script>
+{% endif %}
+<script type="text/javascript">
+    // function submit() {
+    function submit(bankCode,bankProduct) {
+        var data = {
+            key: '{{ sgopaymentid }}',
+            paymentId: '{{ orderId }}',
+            backUrl: escape('{{ back_url }}'),
+            bankCode: bankCode,
+            bankProduct: bankProduct
+        }
+        console.log(data);
+        sgoPlusIframe = document.getElementById("sgoplus-iframe");
+        if (sgoPlusIframe !== null) sgoPlusIframe.src = SGOSignature.getIframeURL(data);
+        SGOSignature.receiveForm();
+    };
+</script>
+
+ <!-- <iframe id="sgoplus-iframe" style="display:none" src="" scrolling="no" frameborder="0"></iframe> -->
+<!-- <script type="text/javascript" src="{{ dir_js }}"></script> -->
+  <div class="buttons">
+    <div class="right">
+    <input type="hidden" value="{{ 'sgopaymentid'}}" name="sgopaymentid" id="sgopaymentid">
+    <input type="hidden" value="{{ 'cartid'}}" name="cartid" id="cartid">
+    <input type="hidden" value="{{ 'paymentamount'}}" name="paymentamount" id="paymentamount">
+    <input type="hidden" value="{{ 'back_url'}}" name="back_url" id="back_url">
+    <input type="hidden" value="{{ 'espayproduct'}}" name="espayproduct" id="espayproduct">
+    <iframe id="sgoplus-iframe" sandbox="allow-same-origin allow-scripts allow-top-navigation" style="display:none" src="" scrolling="no" frameborder="0"></iframe>
+    
+    <!-- <a href="{{ checkout }}" class="button">{{ button_confirm_and_pay }}</a>     -->
+    <input type="button"  value="{{ button_confirm_and_pay }}" id="button-confirm"  name="button-confirm" onclick="submit('{{ bankCode }}','{{ productCode }}')" class="button" />
+  </div>
+  </div>
+
+
+{{ footer }}

@@ -1,0 +1,22 @@
+{{ header }}{{ column_left }}{{ column_right }}
+<div id="content" align="CENTER">{{ content_top }}
+    <h2>{{ heading_title }}</h2>
+    <p>{{ text_payment_failed}}</p>
+    
+
+
+<form name="sgopayment" id="sgopayment" method="post" action="javascript:;" onsubmit="back()">
+	<div class="right">
+    <input type="submit" value="continue" id="button-confirm" name="button-confirm" class="button" />
+  </div>
+</form>
+</div>
+{{ footer }}
+
+<script type="text/javascript">
+function back() {		
+		
+		document.sgopayment.action = 'index.php';		
+	
+}
+</script>

@@ -1,0 +1,249 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        {{ breadcrumb.separator }}<a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a>
+        {% endfor %}
+    </div>
+    {% if error_warning %}
+    <div class="warning">{{ error_warning }}</div>
+    {% endif %}
+    <div class="box">
+        <div class="heading">
+            <h1><img src="view/image/payment.png" alt="" /> {{ heading_title }}</h1>
+            <script type="text/javascript">
+                var input = $("<input>").attr("type", "hidden").attr('name', 'updateproduct').val("update");
+            </script>
+
+             <div class="pull-right">
+                 <button type="button" onclick="$('#form').submit();" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+
+     <!--    <div class="buttons">
+                <a onclick="$('#form').submit();" class="button">{{ button_save }}</a>
+                <a onclick="$('#form').append($(input)); $('#form').submit();" class="button">{{ button_update }}</a>
+                <a href="{{ cancel }}" class="button">{{ button_cancel }}</a></div>
+        </div> -->
+        <div class="content">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form">
+                <table class="form">
+
+                    <tr>
+                        <td><span class="required">*</span> {{ entry_sgopayment_id }}</td>
+                        <td>
+                            <input type="text" size="50" name="payment_sgopayment_id" value="{{ payment_sgopayment_id }}" />
+                            {% if error.payment_sgopayment_id %}
+                            <span class="error">{{ error.payment_sgopayment_id }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="required">*</span> {{ entry_sgopayment_password }}</td>
+                        <td>
+                            <input type="password" size="50" name="payment_sgopayment_password" value="{{ payment_sgopayment_password }}" />
+                            {% if error.payment_sgopayment_password %}
+                            <span class="error">{{ error.payment_sgopayment_password }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="required">*</span> {{ entry_sgopayment_signaturekey }}</td>
+                        <td>
+                            <input type="password" size="50" name="payment_sgopayment_signaturekey" value="{{ payment_sgopayment_signaturekey }}" />
+                            {% if error.payment_sgopayment_signaturekey %}
+                            <span class="error">{{ error.payment_sgopayment_signaturekey }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ entry_sgopayment_ip }}</td>
+                        <td><input type="text" size="50" name="payment_sgopayment_ip" value="{{ payment_sgopayment_ip }}" /></td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="required">*</span> {{ entry_total }}</td>
+                        <td>
+                            <input type="text" name="payment_sgopayment_total" value="{{ payment_sgopayment_total }}" />
+                            {% if error.payment_sgopayment_total %}
+                            <span class="error">{{ error.payment_sgopayment_total }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_order_status }}</td>
+                        <td><select name="payment_sgopayment_order_status_id">
+                                {% for order_status in order_statuses %}
+                                {% if order_status.order_status_id ==  payment_sgopayment_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status['name'] }}</option>
+                                {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status['name'] }}</option>
+                                {% endif %} 
+                                {% endfor %}
+                            </select>
+                            {% if error.payment_sgopayment_order_status %}
+                            <span class="error">{{ error.payment_sgopayment_order_status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_order_status_waiting }}</td>
+                        <td><select name="payment_sgopayment_order_status_waiting">
+                                {% for order_status in order_statuses %}
+                                {% if order_status.order_status_id ==  payment_sgopayment_order_status_waiting %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status['name'] }}</option>
+                                {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status['name'] }}</option>
+                                {% endif %} 
+                                {% endfor %}
+                            </select>
+                            {% if error.payment_sgopayment_order_status %}
+                            <span class="error">{{ error.payment_sgopayment_order_status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_geo_zone }}</td>
+                        <td><select name="payment_sgopayment_geo_zone_id">
+                                <option value="0">{{ text_all_zones }}</option>
+                                {% for geo_zone in geo_zones %}
+                                {% if geo_zone.geo_zone_id ==  payment_sgopayment_geo_zone_id %}
+                                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone['name'] }}</option>
+                                {% else %}
+                                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone['name'] }}</option>
+                                {% endif %} 
+                                {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_status }}</td>
+                        <td><select name="payment_sgopayment_status">
+                                {% if payment_sgopayment_status == true %}
+                                <option value="1" selected="selected">{{ text_enabled }}</option>
+                                <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                <option value="1">{{ text_enabled }}</option>
+                                <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %} 
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_environment }}</td>
+                        <td><select name="payment_sgopayment_environment">
+                                {% if payment_sgopayment_environment %}
+                                <option value="1" selected="selected">{{ text_production }}</option>
+                                <option value="0">{{ text_development }}</option>
+                                {% else %}
+                                <option value="1">{{ text_production }}</option>
+                                <option value="0" selected="selected">{{ text_development }}</option>
+                                {% endif %} 
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td><span class="required">*</span> {{ entry_max_order_total }}</td>
+                        <td>
+                            <input type="text" name="payment_sgopayment_max_order_total" value="{{ payment_sgopayment_max_order_total }}" />
+                            {% if error.payment_sgopayment_max_order_total %}
+                            <span class="error">{{ error.payment_sgopayment_max_order_total }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_credit_card_mdr }}</td>
+                        <td><input type="text" name="payment_sgopayment_credit_card_mdr" value="{{ payment_sgopayment_credit_card_mdr }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_bca_klikpay }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_bca_klikpay" value="{{ payment_sgopayment_transaction_fee_bca_klikpay }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_epay_bri }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_epay_bri" value="{{ payment_sgopayment_transaction_fee_epay_bri }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_mandiri_ib }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_mandiri_ib" value="{{ payment_sgopayment_transaction_fee_mandiri_ib }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_mandiri_ecash }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_mandiri_ecash" value="{{ payment_sgopayment_transaction_fee_mandiri_ecash }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_credit_card }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_credit_card" value="{{ payment_sgopayment_transaction_fee_credit_card }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_permata_atm }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_permata_atm" value="{{ payment_sgopayment_transaction_fee_permata_atm }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_mandiri_atm }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_mandiri_atm" value="{{ payment_sgopayment_transaction_fee_mandiri_atm }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_bni_atm }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_bni_atm" value="{{ payment_sgopayment_transaction_fee_bni_atm }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_bri_atm }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_bri_atm" value="{{ payment_sgopayment_transaction_fee_bri_atm }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_bca_atm }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_bca_atm" value="{{ payment_sgopayment_transaction_fee_bca_atm }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_danamon_ob }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_danamon_ob" value="{{ payment_sgopayment_transaction_fee_danamon_ob }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_danamon_atm }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_danamon_atm" value="{{ payment_sgopayment_transaction_fee_danamon_atm }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_bii_atm }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_bii_atm" value="{{ payment_sgopayment_transaction_fee_bii_atm }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_permata_netpay }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_permata_netpay" value="{{ payment_sgopayment_transaction_fee_permata_netpay }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_nobupay }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_nobupay" value="{{ payment_sgopayment_transaction_fee_nobupay }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_finpay }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_finpay" value="{{ payment_sgopayment_transaction_fee_finpay }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_mayapada_ib }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_mayapada_ib" value="{{ payment_sgopayment_transaction_fee_mayapada_ib }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{ entry_transaction_fee_bitcoin }}</td>
+                        <td><input type="text" name="payment_sgopayment_transaction_fee_bitcoin" value="{{ payment_sgopayment_transaction_fee_bitcoin }}" /></td>
+                    </tr>
+                    <tr>
+                        <td><span class="required">*</span> {{ entry_transaction_fee_label }}</td>
+                        <td>
+                            <input type="text" name="payment_sgopayment_transaction_fee_label" value="{{ payment_sgopayment_transaction_fee_label }}" size="50" />
+                            {% if error.payment_sgopayment_transaction_fee_label %}
+                            <span class="error">{{ error.payment_sgopayment_transaction_fee_label }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ entry_sort_order }}</td>
+                        <td><input type="text" name="payment_sgopayment_sort_order" value="{{ payment_sgopayment_sort_order }}" size="1" /></td>
+                    </tr>
+
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{{ footer }}

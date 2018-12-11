@@ -1,0 +1,58 @@
+<!-- <script type="text/javascript" src="https://sandbox-kit.espay.id/public/signature/js"></script> -->
+
+
+<!--<script type="text/javascript" src="https://kit.espay.id/public/signature/js"></script>----->
+<script type="text/javascript">
+function validateespayproduct() {		
+		
+	if (typeof	( $("#sgopayment input[type='radio']:checked").val()) === 'undefined'){
+		alert("Please Select Payment Method");
+	} else {		
+		//alert("Payment Method Selected");
+		document.sgopayment.action = 'index.php?route=checkout/orderpay';		
+	}
+	
+}
+</script>
+<form name="sgopayment" id="sgopayment" method="post" action="javascript:;" onsubmit="validateespayproduct(this)">
+<h2>{{ text_instruction }}</h2>
+<div class="content">
+	<table align="center" style="margin: 0px auto;">
+	
+	{{ product_list }}
+	</table>
+	<input type="hidden" value="{{ payment_sgopaymentid }}" name="sgopaymentid" id="sgopaymentid">
+	<input type="hidden" value="{{ order_id }}" name="cartid" id="cartid">
+	<input type="hidden" value="{{ total }}" name="paymentamount" id="paymentamount">
+	<input type="hidden" value="{{ back_url }}" name="back_url" id="back_url">
+	<input type="hidden" value="{{ urlUpdateOrder }}" name="url" id="url">
+	
+	
+	<input type="hidden" value="{{ payment_sgopayment_credit_card_mdr}}" name="payment_sgopayment_credit_card_mdr" id="payment_sgopayment_credit_card_mdr">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_bca_klikpay}}" name="payment_sgopayment_transaction_fee_bca_klikpay" id="payment_sgopayment_transaction_fee_bca_klikpay">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_epay_bri}}" name="payment_sgopayment_transaction_fee_epay_bri" id="payment_sgopayment_transaction_fee_epay_bri">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_mandiri_ib}}" name="payment_sgopayment_transaction_fee_mandiri_ib" id="payment_sgopayment_transaction_fee_mandiri_ib">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_mandiri_ecash}}" name="payment_sgopayment_transaction_fee_mandiri_ecash" id="payment_sgopayment_transaction_fee_mandiri_ecash">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_credit_card}}" name="payment_sgopayment_transaction_fee_credit_card" id="payment_sgopayment_transaction_fee_credit_card">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_permata_atm}}" name="payment_sgopayment_transaction_fee_permata_atm" id="payment_sgopayment_transaction_fee_permata_atm">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_danamon_ob}}" name="payment_sgopayment_transaction_fee_danamon_ob" id="payment_sgopayment_transaction_fee_danamon_ob">
+
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_danamon_atm}}" name="payment_sgopayment_transaction_fee_danamon_atm" id="payment_sgopayment_transaction_fee_danamon_atm">
+	
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_bii_atm}}" name="payment_sgopayment_transaction_fee_bii_atm" id="payment_sgopayment_transaction_fee_bii_atm">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_permata_netpay}}" name="payment_sgopayment_transaction_fee_permata_netpay" id="payment_sgopayment_transaction_fee_permata_netpay">
+	<input type="hidden" value="{{ sgopaytment_transaction_fee_nobupay}}" name="payment_sgopayment_transaction_fee_nobupay" id="payment_sgopayment_transaction_fee_nobupay">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_finpay}}" name="payment_sgopayment_transaction_fee_finpay" id="payment_sgopayment_transaction_fee_finpay">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_mayapada_ib}}" name="payment_sgopayment_transaction_fee_mayapada_ib" id="payment_sgopayment_transaction_fee_mayapada_ib">
+	<input type="hidden" value="{{ payment_sgopayment_transaction_fee_bitcoin}}" name="payment_sgopayment_transaction_fee_bitcoin" id="payment_sgopayment_transaction_fee_bitcoin">
+	
+	</div>
+<iframe id="sgoplus-iframe" style="display:none" src="" scrolling="no" frameborder="0"></iframe>
+<script type="text/javascript" src="{{ dir_js }}sgopayment.js"></script>
+<div class="buttons">
+  <div class="right">
+    <input type="submit" value="{{ button_confirm }}" id="button-confirm" name="button-confirm" class="button" />
+  </div>
+</div>
+</form>
+
